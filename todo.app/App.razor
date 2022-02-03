@@ -1,12 +1,33 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To-Do</title>
 </head>
+
 <body>
-    <h1> This is a Test </h1>
+
+    <h1 data-test-id="title-todo" class="title">To-Do App</h1>
+    <div class="todo">
+        <button data-test-id="button-todo" class="btn-todo" type="button">Add Item!</button>
+        <input data-test-id="text-todo" class="txt-todo" type="text" placeholder="Write something!">
+    </div>
+
+
+
+    @code {
+        void AddItem(string item)
+        {
+
+
+        }
+    }
+
+
+
 </body>
+
 </html>
