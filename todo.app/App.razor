@@ -1,33 +1,41 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do</title>
-</head>
-
-<body>
-
-    <h1 data-test-id="title-todo" class="title">To-Do App</h1>
-    <div class="todo">
-        <button data-test-id="button-todo" class="btn-todo" type="button">Add Item!</button>
-        <input data-test-id="text-todo" class="txt-todo" type="text" placeholder="Write something!">
-    </div>
+﻿@page "/"
+@inherits ToDoBase
 
 
 
-    @code {
-        void AddItem(string item)
-        {
 
 
-        }
+
+<h1 data-test-id="title-todo" class="title">To-Do App</h1>
+<div class="todo">
+    <button data-test-id="button-todo" class="btn-todo" @onclick="() => AddItem(inputValue)" type="button">Add Item!</button>
+    <input data-test-id="text-todo" class="txt-todo" type="text" @bind="inputValue" placeholder="Write something!">
+</div>
+
+@code {
+    private string inputValue;
+
+}
+
+@if (Todos == null)
+{
+    <h1>Please Wait ...</h1>
+}
+
+else
+{
+
+   
+
+    @foreach (var todo in Todos)
+    {
+        <div>
+
+          <h1>@todo</h1>
+
+        </div>
+
     }
 
 
-
-</body>
-
-</html>
+}
