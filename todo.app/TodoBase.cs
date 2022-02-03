@@ -16,9 +16,9 @@ namespace todo.app
 
         protected void AddItem(string value)
         {
+           
 
             Value = value;
-
             Todos.Add(value);
 
         }

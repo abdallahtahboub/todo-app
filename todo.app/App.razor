@@ -8,12 +8,14 @@
 
 <h1 data-test-id="title-todo" class="title">To-Do App</h1>
 <div class="todo">
-    <button data-test-id="button-todo" class="btn-todo" @onclick="() => AddItem(inputValue)" type="button">Add Item!</button>
-    <input data-test-id="text-todo" class="txt-todo" type="text" @bind="inputValue" placeholder="Write something!">
+    <button onke data-test-id="button-todo" class="btn-todo" @onclick="() => AddItem(TextValue)" type="submit">Add
+        Item!</button>
+    <input data-test-id="text-todo" class="txt-todo" type="text" @bind="TextValue" placeholder="Write something!">
 </div>
 
+
 @code {
-    private string inputValue;
+    private string TextValue;
 
 }
 
@@ -25,17 +27,20 @@
 else
 {
 
-   
+
 
     @foreach (var todo in Todos)
     {
-        <div>
+        <div class="todo-list">
 
-          <h1>@todo</h1>
+      <h3 class="title-item"><label  for="">@todo</label></h3>
+      <button onke data-test-id="button-Delete-todo" class="btn-Delete-todo" type="submit">Delete!</button>
+      <button onke data-test-id="button-Edit-todo" class="btn-Edit-todo" type="submit">Edit!</button>
 
-        </div>
+
+     </div>
+
 
     }
-
 
 }
