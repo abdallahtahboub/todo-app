@@ -16,10 +16,17 @@ namespace todo.app
 
         protected void AddItem(string value)
         {
-           
+            if (value == null)
+            {
+               // do nothing
+            }
 
-            Value = value;
-            Todos.Add(value);
+            else
+            {
+                Value = value;
+                Todos.Add(value);
+            }
+
 
         }
 
