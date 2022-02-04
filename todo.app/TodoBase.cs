@@ -37,12 +37,12 @@ namespace todo.app
         }
 
 
-        public int randomNumber()
+        public int GenerateUUIDs()
         {
 
-            Random rnd = new Random();
-            int num = rnd.Next();
-            return num;
+            Random randomUuid = new Random();
+            int generatedUuid = randomUuid.Next();
+            return generatedUuid;
 
         }
 
