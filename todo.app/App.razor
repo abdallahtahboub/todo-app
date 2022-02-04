@@ -17,6 +17,9 @@
 @code {
     private string TextValue;
 
+    
+
+
 }
 
 @if (Todos == null)
@@ -33,12 +36,12 @@ else
     {
         <div class="todo-list">
 
-      <h3 class="title-item"><label  for="">@todo</label></h3>
-      <button onke data-test-id="button-Delete-todo" class="btn-Delete-todo" type="submit">Delete!</button>
-      <button onke data-test-id="button-Edit-todo" class="btn-Edit-todo" type="submit">Edit!</button>
+    <h3 class="title-item"><label for="">@todo</label></h3>
+    <button onke data-test-id="button-Delete-todo @randomNumber()" class="btn-Delete-todo" type="submit">Delete</button>
+    <button onke data-test-id="button-Edit-todo" class="btn-Edit-todo" type="submit">Edit</button>
 
 
-     </div>
+</div>
 
 
     }
