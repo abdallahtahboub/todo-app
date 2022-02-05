@@ -13,26 +13,21 @@ namespace todo.app
 
 
 
-        protected List<string> Todos = new List<string>();
-        protected string Value { get; set; }
+        protected List<Item> Todos = new List<Item>();
+  
 
-        protected void AddItem(string value)
+        Item myitem = new Item();
+
+
+        protected Item AddItem(string value)
         {
 
 
-            if (value == null)
-            {
-                // do nothing
-            }
+            myitem.Value = value;
 
-            else
-            {
-                var val = value;
+            Todos.Add(myitem);
 
-                Todos.Add(val);
-
-            }
-
+            return myitem;
 
         }
 
