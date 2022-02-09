@@ -5,32 +5,40 @@
 
 <h1 data-test-id="title-todo" class="title">To-Do App</h1>
 <div class="todo">
-    <button data-test-id="button-todo" class="btn-todo" @onclick="() => AddItem(Text)" type="submit">Add
+    <button data-test-id="button-todo" class="btn-todo" @onclick="() => AddItem(TextValue)" type="submit">Add
         Item!</button>
-    <input data-test-id="text-todo" class="txt-todo" type="text" @bind="Text" placeholder="Write something!">
+    <input data-test-id="text-todo" class="txt-todo" type="text" @bind="TextValue" placeholder="Write something!">
 </div>
 
 
-
-@code {
-    private string Text;
-
+@code {    
+    private string TextValue;
 }
 
 
 
-
-
-@foreach (var todo in Todos)
+@if (Todos == null)
 {
-    <div class="todo-list">
+    <h1>Please Wait ...</h1>
+}
 
-    <h3 data-test-id="label-title-todo-@GenerateUUIDs()" class="title-item"><label for="">@todo</label></h3>
+else
+{
+
+
+
+    @foreach (var value in Values)
+    {
+        <div class="todo-list">
+
+    <h3 data-test-id="label-title-todo-@GenerateUUIDs()" class="title-item"><label for="">@value</label></h3>
     <button data-test-id="button-Delete-todo-@GenerateUUIDs()" class="btn-Delete-todo" type="submit">Delete</button>
     <button data-test-id="button-Edit-todo-@GenerateUUIDs()" class="btn-Edit-todo" type="submit">Edit</button>
 
 
 </div>
 
+
+    }
 
 }

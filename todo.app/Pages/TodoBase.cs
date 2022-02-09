@@ -8,29 +8,36 @@ using System.Threading.Tasks;
 
 namespace todo.app
 {
+
     public class ToDoBase : ComponentBase
     {
 
-
-
         protected List<Item> Todos = new List<Item>();
-  
+        protected List<string> Values = new List<string>();
+        protected string Value { get; set; }
 
-        Item myitem = new Item();
-
-
-        protected Item AddItem(string value)
+        protected void AddItem(string _value)
         {
 
+             Item item = new Item();
 
-            myitem.Value = value;
 
-            Todos.Add(myitem);
+            if (_value == null)
+            {
+                // do nothing
+            }
 
-            return myitem;
+            else
+            {
+                item.Value=_value; 
+                var val = item.Value;
+                _value = Value;
+                Todos.Add(item);
+                Values.Add(val);
+
+            }
 
         }
-
 
         public int GenerateUUIDs()
         {
@@ -40,8 +47,6 @@ namespace todo.app
             return generatedUuid;
 
         }
-
-
 
     }
 
