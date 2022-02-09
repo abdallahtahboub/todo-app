@@ -22,11 +22,10 @@ namespace todo.app
              Item item = new Item();
 
 
-            if (_value == null)
+            if (string.IsNullOrEmpty(_value))
             {
-                // do nothing
+                  Console.WriteLine("String is Empty");
             }
-
             else
             {
                 item.Value=_value; 
@@ -34,8 +33,10 @@ namespace todo.app
                 _value = Value;
                 Todos.Add(item);
                 Values.Add(val);
-
+              
             }
+
+         
 
         }
 
