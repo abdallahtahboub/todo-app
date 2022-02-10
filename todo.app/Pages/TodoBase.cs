@@ -11,32 +11,16 @@ namespace todo.app
 
     public class ToDoBase : ComponentBase
     {
+        public Item _Item;
+        public List<Item> _Items = new List<Item>();
 
-        protected List<Item> Todos = new List<Item>();
-        protected List<string> Values = new List<string>();
-        protected string Value { get; set; }
-
-        protected void AddItem(string _value)
+        public List<Item> AddItem(string item)
         {
+            _Item = new Item();
+            _Item.Value = item;
+            _Items.Add(_Item);
 
-             Item item = new Item();
-
-
-            if (string.IsNullOrEmpty(_value))
-            {
-                  Console.WriteLine("String is Empty");
-            }
-            else
-            {
-                item.Value=_value; 
-                var val = item.Value;
-                _value = Value;
-                Todos.Add(item);
-                Values.Add(val);
-              
-            }
-
-         
+            return _Items;
 
         }
 
