@@ -17,13 +17,7 @@ namespace todo.app
 
         public List<Item> AddItem(string item)
         {
-            if (string.IsNullOrWhiteSpace(item))
-            {
-                // do nothing
-
-            }
-
-            else
+            if (!string.IsNullOrWhiteSpace(item))
             {
                 _Item = new Item();
                 _Item.ItemId = _Counter++;
@@ -31,8 +25,7 @@ namespace todo.app
                 _Items.Add(_Item);
 
             }
-
-
+            
             return _Items;
 
         }
