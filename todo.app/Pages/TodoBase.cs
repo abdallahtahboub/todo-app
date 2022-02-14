@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-
+using System.Linq;
 
 namespace todo.app
 {
@@ -13,7 +12,7 @@ namespace todo.app
     {
         public Item _Item;
         public int _Counter = 1;
-        public List<Item> _Items = new List<Item>();
+        public List<Item> _Items = new();
 
         public List<Item> AddItem(string item)
         {
@@ -25,9 +24,28 @@ namespace todo.app
                 _Items.Add(_Item);
 
             }
-            
+
             return _Items;
 
+        }
+
+        public int DeleteItem(int id)
+        {
+           foreach (Item item in _Items)
+            {
+
+                if (item.ItemId == id)
+                {
+
+                    _ = _Items.Remove(item);
+                    break;
+                }
+
+
+            } 
+
+            return id;
+         
         }
 
         public int GenerateUUIDs()
