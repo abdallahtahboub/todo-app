@@ -29,9 +29,9 @@ namespace todo.app
 
         }
 
-        public int DeleteItem(int id)
+        public void DeleteItem(int id)
         {
-           foreach (Item item in _Items)
+            foreach (Item item in _Items)
             {
 
                 if (item.ItemId == id)
@@ -42,10 +42,10 @@ namespace todo.app
                 }
 
 
-            } 
+            }
 
-            return id;
-         
+
+
         }
 
         public int GenerateUUIDs()
