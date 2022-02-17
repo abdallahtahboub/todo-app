@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using todo.app.Data;
+//using todo.app.Data;
 
 namespace todo.app
 {
@@ -27,7 +27,7 @@ namespace todo.app
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -14,7 +14,7 @@ namespace todo.app
         public int _Counter = 1;
         public List<Item> _Items = new();
 
-        public List<Item> AddItem(string item)
+        public void AddItem(string item)
         {
             if (!string.IsNullOrWhiteSpace(item))
             {
@@ -23,21 +23,25 @@ namespace todo.app
                 _Item.Value = item;
                 _Items.Add(_Item);
 
-            }
 
-            return _Items;
+            }
 
         }
 
         public void DeleteItem(int id)
         {
+
+
             foreach (Item item in _Items)
             {
 
                 if (item.ItemId == id)
                 {
 
-                    _ = _Items.Remove(item);
+                    _Items.Remove(item);
+
+                    // This break helps avoiding "System.InvalidOperationException" because an 
+                    // item is being removed while looping over an item.
                     break;
                 }
 
@@ -47,7 +51,7 @@ namespace todo.app
 
 
         }
-
+        // To generate Unique ids to help identifying list items and elements whitch helps with test automation.
         public int GenerateUUIDs()
         {
 

@@ -1,19 +1,14 @@
-
-using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-
-namespace todo.app
+namespace todo.business
 {
     public class Item
     {
 
         public int ItemId { get; set; }
         public string Value { get; set; }
+
         public bool IsCompleted { get; set; }
 
     }
-
 }
