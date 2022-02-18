@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
+
 
 namespace todo.app
 {
@@ -22,8 +21,6 @@ namespace todo.app
                 _Item.ItemId = _Counter++;
                 _Item.Value = item;
                 _Items.Add(_Item);
-
-
             }
 
         }

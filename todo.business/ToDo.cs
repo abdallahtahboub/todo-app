@@ -9,7 +9,7 @@ namespace todo.business
         public int _Counter = 1;
         public List<Item> _Items = new();
 
-        public void AddItem(string item)
+        public Item AddItem(string item)
         {
             if (!string.IsNullOrWhiteSpace(item))
             {
@@ -20,6 +20,8 @@ namespace todo.business
 
 
             }
+
+            return _Item;
 
         }
 
