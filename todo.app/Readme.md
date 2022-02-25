@@ -16,4 +16,8 @@
 8. Implement the Database with EF (Enitity framwork).  
 9. Add CI/CD to the project. 
 10. Use Docker in the projects.
- 
+
+
+# Done 
+
+1. Projects migrated to dotnet 6.0
