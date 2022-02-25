@@ -6,7 +6,7 @@
 
 # To-Dos 
 
-1. find out how to integrate hot reload. 
+
 2. Adding external resources to the fron-end (Icons, IMages ...).
 3. Implement the edit funtion!.
 4. Restructure the projects (API,Data,Business, App, core).
@@ -21,3 +21,4 @@
 # Done 
 
 1. Projects migrated to dotnet 6.0
+2. find out how to integrate hot reload. 
