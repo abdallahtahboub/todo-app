@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-//using todo.app.Data;
+using System;
+
 
 namespace todo.app
 {
@@ -27,6 +23,13 @@ namespace todo.app
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddHttpClient<ITodoService,TodoService>(client => 
+            
+            
+            {
+                client.BaseAddress = new Uri("http://localhost:5002/");
+                
+            });
           
         }
 

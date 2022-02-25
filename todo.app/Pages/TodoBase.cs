@@ -2,6 +2,11 @@
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using todo.api;
+using todo.business;
+
 
 
 namespace todo.app
@@ -9,45 +14,19 @@ namespace todo.app
 
     public class ToDoBase : ComponentBase
     {
-        public Item _Item;
-        public int _Counter = 1;
-        public List<Item> _Items = new();
+        [Inject]
 
-        public void AddItem(string item)
+        public ITodoService TodoService { get; set; }
+        public ToDo MyTodo { get; set; }
+
+        public void AddItem()
         {
-            if (!string.IsNullOrWhiteSpace(item))
-            {
-                _Item = new Item();
-                _Item.ItemId = _Counter++;
-                _Item.Value = item;
-                _Items.Add(_Item);
-            }
+
+            TodoService.GetItem();
+
 
         }
 
-        public void DeleteItem(int id)
-        {
-
-
-            foreach (Item item in _Items)
-            {
-
-                if (item.ItemId == id)
-                {
-
-                    _Items.Remove(item);
-
-                    // This break helps avoiding "System.InvalidOperationException" because an 
-                    // item is being removed while looping over an item.
-                    break;
-                }
-
-
-            }
-
-
-
-        }
         // To generate Unique ids to help identifying list items and elements whitch helps with test automation.
         public int GenerateUUIDs()
         {
@@ -58,6 +37,12 @@ namespace todo.app
 
         }
 
+
+
+
     }
 
+
 }
+
+

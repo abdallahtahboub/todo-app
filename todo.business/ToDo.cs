@@ -17,8 +17,6 @@ namespace todo.business
                 _Item.ItemId = _Counter++;
                 _Item.Value = item;
                 _Items.Add(_Item);
-
-
             }
 
             return _Item;
@@ -39,10 +37,7 @@ namespace todo.business
                     break;
                 }
 
-
             }
-
-
 
         }
         // To generate Unique ids to help identifying list items and elements whitch helps with test automation.

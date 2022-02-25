@@ -1,37 +1,52 @@
 @page "/"
 @inherits ToDoBase
+@using System.Text.Json
+@using System.Text.Json.Serialization;
 
 
 
 <h1 data-test-id="title-todo" class="title">To-Do App</h1>
 <div class="todo">
-    <button data-test-id="button-todo" class="btn-todo" @onclick="@(() => { AddItem(TextValue);})" type="submit">Add
+    <button data-test-id="button-todo" class="btn-todo" @onclick="@(() => { AddItem();})" type="submit">Add
         Item!</button>
     <input data-test-id="text-todo" class="txt-todo" type="text" @bind="TextValue" placeholder="Write something!">
 
-    
 </div>
 
 
 
 @code {
     private string TextValue;
+
+
 }
 
+@* @functions {
+    private async Task PrintWebApiResponse()
+    {
+    var response = await Http.GetStringAsync("/api/Customer");
+    Console.WriteLine(response);
+    }
+    } *@
 
 
 
- 
-
-
-@foreach (var item in _Items)
+@if (MyTodo == null)
 {
-    <div class="todo-list">
+    Console.WriteLine("Empty");
+}
+else
+{
+    @foreach (var item in MyTodo._Items)
+    {
+        <div class="todo-list">
     <h3 data-test-id="label-title-todo-@GenerateUUIDs()" class="title-item"> <label for="">@item.Value</label></h3>
-    <button  @onclick="@(() => { DeleteItem(item.ItemId);})" data-test-id="button-Delete-todo-@GenerateUUIDs()"  class="btn-Delete-todo" type="submit">Delete</button>
-    <button data-test-id="button-Edit-todo-@GenerateUUIDs()" class="btn-Edit-todo" type="submit">Edit  <i class="fa-solid fa-xmark"></i></button>
-    
-</div>
+    @* <button @onclick="@(() => { DeleteItem(item.ItemId);})" data-test-id="button-Delete-todo-@GenerateUUIDs()"
+        class="btn-Delete-todo" type="submit">Delete</button> *@
+    @* <button data-test-id="button-Edit-todo-@GenerateUUIDs()" class="btn-Edit-todo" type="submit">Edit <i
+        class="fa-solid fa-xmark"></i></button> *@
 
+</div>
+    }
 
 }
