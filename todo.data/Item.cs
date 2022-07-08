@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace todo.business
+namespace todo.data
 {
     public class Item
     {

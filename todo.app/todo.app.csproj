@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\todo.api\todo.api.csproj" />
+    <ProjectReference Include="..\todo.data\todo.data.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
