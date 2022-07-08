@@ -18,7 +18,7 @@ namespace chess_api.Controllers
 
     
 
-        [HttpGet]
+        [HttpPost]
         public Item Get()
         {
             var todo = new ToDo();
