@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using todo.data;
+using Microsoft.EntityFrameworkCore;
 
 namespace todo.api
 {
@@ -26,11 +28,15 @@ namespace todo.api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            // configuring connectionString to sqlserver
+            services.AddDbContextPool<ToDoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ToDoConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "todo.api", Version = "v1" });
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
