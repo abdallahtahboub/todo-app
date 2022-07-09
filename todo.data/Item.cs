@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using todo.data;
 
 namespace todo.data
 {
@@ -7,6 +8,7 @@ namespace todo.data
     {
 
         public int ItemId { get; set; }
+        [Required]
         public string Value { get; set; }
         public bool IsCompleted { get; set; }
 
