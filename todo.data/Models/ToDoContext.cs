@@ -6,14 +6,16 @@ namespace todo.data
     {
 
 
-        public DbSet<Item> Items { get; set; }
-        public DbSet<User> Users { get; set; }
+        
 
        // First Method 
         public ToDoContext(DbContextOptions<ToDoContext> options) : base(options)
         {
 
         }
+
+        public DbSet<Item> Items { get; set; }
+        public DbSet<User> Users { get; set; }
 
        
 
