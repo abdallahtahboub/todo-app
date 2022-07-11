@@ -59,13 +59,10 @@ namespace todo.api
 
             app.UseAuthorization();
 
-            app.UseEndpoints(async endpoints =>
+            app.UseEndpoints( endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync(_Configuration["MyCustomKey"]);
-                });
+               
             });
         }
     }
