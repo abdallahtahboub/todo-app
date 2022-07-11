@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using todo.data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.AspNetCore.Http;
 
 namespace todo.api
 {
@@ -13,20 +15,28 @@ namespace todo.api
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _Configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
+        private IConfiguration _Configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string conString = Microsoft
+           .Extensions
+           .Configuration
+           .ConfigurationExtensions
+           .GetConnectionString(this._Configuration, "TodoConnection");
+
+            System.Console.WriteLine("My connectionString is: " + " " + conString);
+
             // configuring and registering connectionString to sqlserver
-            services.AddDbContextPool<ToDoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContextPool<ToDoContext>(options => options.UseSqlServer(_Configuration.GetConnectionString("TodoConnection")));
             // Configuring and registering the SQL repository (saving and reteeieving from database).
             // using addscoped method in order for the instance sql repository class to be alive and available of the entire scope of an http request.  
             services.AddScoped<IToDoRepository, SQLToDoRepository>();
             //  Configuring and registering the SQL repository (saving and reteeieving from InMemory collection)  
-            services.AddTransient<IToDoRepository, TodoRepositoryInMemory>();
+            // services.AddTransient<IToDoRepository, TodoRepositoryInMemory>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -49,9 +59,13 @@ namespace todo.api
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(async endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync(_Configuration["MyCustomKey"]);
+                });
             });
         }
     }
