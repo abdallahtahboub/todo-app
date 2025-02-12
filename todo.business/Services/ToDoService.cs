@@ -6,29 +6,32 @@ namespace todo.business.Services;
 
 public class ToDoService : IToDoService
 {
-    public Item _Item;
-    public int _Counter = 1;
     public List<Item> _Items = new();
-    public List<Item> _ItemsRetrieved = new();
-
-    public Item AddItem(string item)
+    public Item _item;
+    public Item AddItem(string Value)
     {
-
-        var _Item = new Item();
-        _Item.ItemId = _Items.Count + 1;
-        _Item.Value = item;
-        _Item.IsCompleted = false;
-        _Items.Add(_Item);
-        return _Item;
+        _item = new Item
+        {
+            ItemId = _Items.Count + 1,
+            Value = Value,
+            IsCompleted = false
+        };
+        _Items.Add(_item);
+        return _item;
     }
 
     public Item GetItem(int id)
     {
+        foreach (Item item in _Items)
+        {
+            if (item.ItemId == id)
+            {
+                return item;
+            }
+        }
 
-        return _Items.FirstOrDefault(t => t.ItemId == id);
-
+        return null;
     }
-
     public void DeleteItem(int id)
     {
         foreach (Item item in _Items)
@@ -36,7 +39,6 @@ public class ToDoService : IToDoService
             if (item.ItemId == id)
             {
                 _Items.Remove(item);
-                _ItemsRetrieved.Add(item);
                 break;
             }
         }
@@ -48,6 +50,7 @@ public class ToDoService : IToDoService
         Random randomUuid = new Random();
         int generatedUuid = randomUuid.Next();
         return generatedUuid;
+
     }
 
 
