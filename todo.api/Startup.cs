@@ -8,6 +8,9 @@ using todo.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using todo.business.Services;
+
 
 namespace todo.api
 {
@@ -22,6 +25,7 @@ namespace todo.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IToDoService, ToDoService>();
             string conString = Microsoft
            .Extensions
            .Configuration
@@ -59,10 +63,10 @@ namespace todo.api
 
             app.UseAuthorization();
 
-            app.UseEndpoints( endpoints =>
+            app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-               
+
             });
         }
     }
