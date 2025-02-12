@@ -13,16 +13,12 @@ public class ToDoService : IToDoService
 
     public Item AddItem(string item)
     {
-        if (!string.IsNullOrWhiteSpace(item))
-        {
-            var _Item = new Item();
-            _Item.ItemId = _Items.Count + 1;
-            _Item.Value = item;
-            _Item.IsCompleted = false;
 
-           
-        }
-         _Items.Add(_Item);
+        var _Item = new Item();
+        _Item.ItemId = _Items.Count + 1;
+        _Item.Value = item;
+        _Item.IsCompleted = false;
+        _Items.Add(_Item);
         return _Item;
     }
 
