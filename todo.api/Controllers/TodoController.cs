@@ -5,15 +5,10 @@ using todo.data;
 
 namespace chess_api.Controllers
 {
-
-
-
-
     [ApiController]
     [Route("[controller]")]
     public class TodoController : ControllerBase
     {
-
         private readonly IToDoService _todoService;
         public TodoController(IToDoService todoService)
         {
@@ -31,6 +26,37 @@ namespace chess_api.Controllers
             }
 
             return Ok(todo);
+        }
+        [HttpPut("{id}")]
+        public IActionResult UpdateItem(int id, [FromBody] Item updatedItem)
+        {
+            if (string.IsNullOrWhiteSpace(updatedItem.Value))
+            {
+                return BadRequest("Todo name cannot be empty.");
+            }
+
+            var updatedTodo = _todoService.UpdateItem(id, updatedItem.Value);
+
+            if (updatedTodo == null)
+            {
+                return NotFound($"Todo with ID {id} not found.");
+            }
+
+            return Ok(updatedTodo);
+        }
+
+
+        [HttpPut("{id}/complete")]
+        public IActionResult MarkItemAsCompleted(int id)
+        {
+            var updatedItem = _todoService.MarkAsCompleted(id);
+
+            if (updatedItem == null)
+            {
+                return NotFound($"Todo with ID {id} not found.");
+            }
+
+            return Ok(updatedItem);
         }
 
         [HttpPost]
@@ -50,6 +76,23 @@ namespace chess_api.Controllers
 
             return CreatedAtAction(nameof(GetItemById), new { id = newTodo.ItemId }, newTodo);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteItem(int id)
+        {
+            bool isDeleted = _todoService.DeleteItem(id);
+
+            if (!isDeleted)
+            {
+                return NotFound($"Todo with ID {id} not found.");
+            }
+
+            return NoContent(); // 204 No Content response for successful deletion
+        }
+
+
+
+
 
 
     }

@@ -32,17 +32,44 @@ public class ToDoService : IToDoService
 
         return null;
     }
-    public void DeleteItem(int id)
+
+
+    public Item UpdateItem(int id, string newValue)
+    {
+        var item = _Items.FirstOrDefault(t => t.ItemId == id);
+        if (item != null)
+        {
+            item.Value = newValue;
+        }
+        return item;
+    }
+
+
+    public Item MarkAsCompleted(int id)
     {
         foreach (Item item in _Items)
         {
             if (item.ItemId == id)
             {
+                item.IsCompleted = true;
                 _Items.Remove(item);
-                break;
+                return item;
             }
         }
+        return null;
     }
+
+    public bool DeleteItem(int id)
+    {
+        var item = _Items.FirstOrDefault(t => t.ItemId == id);
+        if (item != null)
+        {
+            _Items.Remove(item);
+            return true;
+        }
+        return false;
+    }
+
 
     // To generate Unique ids to help identifying list items and elements whitch helps with test automation.
     public int GenerateUUIDs()
