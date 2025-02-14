@@ -25,7 +25,11 @@ namespace todo.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           services.AddSingleton<IToDoService, ToDoService>();
+            services.AddSingleton<IToDoService, ToDoService>();
+            services.AddDbContext<ToDoContext>(options =>
+      options.UseSqlServer(_Configuration.GetConnectionString("TodoConnection"))
+                                                                                  );
+
 
             string conString = Microsoft
            .Extensions
@@ -35,13 +39,13 @@ namespace todo.api
 
             System.Console.WriteLine("My connectionString is: " + " " + conString);
 
-            // configuring and registering connectionString to sqlserver
-            services.AddDbContextPool<ToDoContext>(options => options.UseSqlServer(_Configuration.GetConnectionString("TodoConnection")));
-            // Configuring and registering the SQL repository (saving and reteeieving from database).
-            // using addscoped method in order for the instance sql repository class to be alive and available of the entire scope of an http request.  
-            services.AddScoped<IToDoRepository, SQLToDoRepository>();
-            //  Configuring and registering the SQL repository (saving and reteeieving from InMemory collection)  
-            // services.AddTransient<IToDoRepository, TodoRepositoryInMemory>();
+            // // configuring and registering connectionString to sqlserver
+            // services.AddDbContextPool<ToDoContext>(options => options.UseSqlServer(_Configuration.GetConnectionString("TodoConnection")));
+            // // Configuring and registering the SQL repository (saving and reteeieving from database).
+            // // using addscoped method in order for the instance sql repository class to be alive and available of the entire scope of an http request.  
+            // services.AddScoped<IToDoRepository, SQLToDoRepository>();
+            // //  Configuring and registering the SQL repository (saving and reteeieving from InMemory collection)  
+            // // services.AddTransient<IToDoRepository, TodoRepositoryInMemory>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

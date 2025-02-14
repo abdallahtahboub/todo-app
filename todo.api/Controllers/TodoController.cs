@@ -15,7 +15,7 @@ namespace chess_api.Controllers
             _todoService = todoService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}/ getItem")]
         public IActionResult GetItemById(int id)
         {
             var todo = _todoService.GetItem(id);
@@ -27,7 +27,7 @@ namespace chess_api.Controllers
 
             return Ok(todo);
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id}/ UpdateItem")]
         public IActionResult UpdateItem(int id, [FromBody] Item updatedItem)
         {
             if (string.IsNullOrWhiteSpace(updatedItem.Value))
@@ -59,7 +59,7 @@ namespace chess_api.Controllers
             return Ok(updatedItem);
         }
 
-        [HttpPost]
+        [HttpPost("addItem")]
         public IActionResult AddItem([FromBody] Item item)
         {
             if (string.IsNullOrWhiteSpace(item.Value))
@@ -77,7 +77,7 @@ namespace chess_api.Controllers
             return CreatedAtAction(nameof(GetItemById), new { id = newTodo.ItemId }, newTodo);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/ DeleteItem")]
         public IActionResult DeleteItem(int id)
         {
             bool isDeleted = _todoService.DeleteItem(id);
