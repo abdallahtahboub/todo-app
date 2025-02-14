@@ -6,9 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using todo.data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+
 using todo.business.Services;
 
 
@@ -26,9 +24,11 @@ namespace todo.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IToDoService, ToDoService>();
-            services.AddDbContext<ToDoContext>(options =>
-      options.UseSqlServer(_Configuration.GetConnectionString("TodoConnection"))
-                                                                                  );
+            services.AddDbContextPool<ToDoContext>(options =>
+           options.UseMySql(
+          _Configuration.GetConnectionString("TodoConnection"),
+          new MySqlServerVersion(new System.Version(8, 0, 36)))); // Ensure System.Version is used
+
 
 
             string conString = Microsoft
