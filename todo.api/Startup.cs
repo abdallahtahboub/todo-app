@@ -14,6 +14,9 @@ namespace todo.api
 {
     public class Startup
     {
+
+        private readonly IConfiguration _configuration; // ✅ Declare _configuration
+
         public Startup(IConfiguration configuration)
         {
             _Configuration = configuration;
@@ -24,11 +27,9 @@ namespace todo.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IToDoService, ToDoService>();
-            services.AddDbContextPool<ToDoContext>(options =>
-           options.UseMySql(
-          _Configuration.GetConnectionString("TodoConnection"),
-          new MySqlServerVersion(new System.Version(8, 0, 36)))); // Ensure System.Version is used
 
+            services.AddDbContext<TodoDBContext>(options =>
+            options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
 
             string conString = Microsoft

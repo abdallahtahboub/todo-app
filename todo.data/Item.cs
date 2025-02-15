@@ -6,9 +6,10 @@ namespace todo.data
 {
     public class Item
     {
-        [Key]
         public int ItemId { get; set; }
+        [Required]
         public string Value { get; set; }
+        [Required]
         public bool IsCompleted { get; set; }
 
     }
