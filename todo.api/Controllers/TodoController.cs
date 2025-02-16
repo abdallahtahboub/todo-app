@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using todo.business.Services;
 using todo.data;
@@ -9,85 +10,36 @@ namespace chess_api.Controllers
     [Route("[controller]")]
     public class TodoController : ControllerBase
     {
-        private readonly IToDoService _todoService;
-        public TodoController(IToDoService todoService)
+
+
+        private readonly TodoDBContext _context;
+
+        public TodoController(TodoDBContext context)
         {
-            _todoService = todoService;
+            _context = context;
         }
 
-        [HttpGet("{id}/ getItem")]
-        public IActionResult GetItemById(int id)
-        {
-            var todo = _todoService.GetItem(id);
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTodoById(int id)
+        {
+
+
+            var todo = await _context.TodoItems.FindAsync(id);
             if (todo == null)
             {
-                return NotFound($"Todo with ID {id} not found.");
+                return NotFound(new { message = "Todo item not found" });
             }
-
-            return Ok(todo);
-        }
-        [HttpPut("{id}/ UpdateItem")]
-        public IActionResult UpdateItem(int id, [FromBody] Item updatedItem)
-        {
-            if (string.IsNullOrWhiteSpace(updatedItem.Value))
-            {
-                return BadRequest("Todo name cannot be empty.");
-            }
-
-            var updatedTodo = _todoService.UpdateItem(id, updatedItem.Value);
-
-            if (updatedTodo == null)
-            {
-                return NotFound($"Todo with ID {id} not found.");
-            }
-
-            return Ok(updatedTodo);
+            return todo == null ? NotFound() : Ok(todo);
         }
 
 
-        [HttpPut("{id}/complete")]
-        public IActionResult MarkItemAsCompleted(int id)
+        [HttpPost]
+        public async Task<IActionResult> CreateTodo(Item todo)
         {
-            var updatedItem = _todoService.MarkAsCompleted(id);
-
-            if (updatedItem == null)
-            {
-                return NotFound($"Todo with ID {id} not found.");
-            }
-
-            return Ok(updatedItem);
-        }
-
-        [HttpPost("addItem")]
-        public IActionResult AddItem([FromBody] Item item)
-        {
-            if (string.IsNullOrWhiteSpace(item.Value))
-            {
-                return BadRequest("Todo name cannot be empty.");
-            }
-
-            var newTodo = _todoService.AddItem(item.Value);
-
-            if (newTodo == null)
-            {
-                return StatusCode(500, "Failed to create the todo item.");
-            }
-
-            return CreatedAtAction(nameof(GetItemById), new { id = newTodo.ItemId }, newTodo);
-        }
-
-        [HttpDelete("{id}/ DeleteItem")]
-        public IActionResult DeleteItem(int id)
-        {
-            bool isDeleted = _todoService.DeleteItem(id);
-
-            if (!isDeleted)
-            {
-                return NotFound($"Todo with ID {id} not found.");
-            }
-
-            return NoContent(); // 204 No Content response for successful deletion
+            _context.TodoItems.Add(todo);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetTodoById), new { id = todo.ItemId }, todo);
         }
 
 

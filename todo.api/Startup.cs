@@ -15,30 +15,22 @@ namespace todo.api
     public class Startup
     {
 
-        private readonly IConfiguration _configuration; // ✅ Declare _configuration
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            _Configuration = configuration;
+            _configuration = configuration;
         }
-        private IConfiguration _Configuration;
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IToDoService, ToDoService>();
+            //services.AddSingleton<IToDoService, ToDoService>();
 
             services.AddDbContext<TodoDBContext>(options =>
-            options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
 
-
-            string conString = Microsoft
-           .Extensions
-           .Configuration
-           .ConfigurationExtensions
-           .GetConnectionString(this._Configuration, "TodoConnection");
-
-            System.Console.WriteLine("My connectionString is: " + " " + conString);
 
             // // configuring and registering connectionString to sqlserver
             // services.AddDbContextPool<ToDoContext>(options => options.UseSqlServer(_Configuration.GetConnectionString("TodoConnection")));
