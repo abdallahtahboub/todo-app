@@ -23,8 +23,6 @@ namespace chess_api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTodoById(int id)
         {
-
-
             var todo = await _context.TodoItems.FindAsync(id);
             if (todo == null)
             {
@@ -32,7 +30,21 @@ namespace chess_api.Controllers
             }
             return todo == null ? NotFound() : Ok(todo);
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+            var todo = await _context.TodoItems.FindAsync(id);
+            if (todo == null)
+            {
+                return NotFound(new { message = "Todo item not found" });
+            }
 
+            _context.TodoItems.Remove(todo);
+            await _context.SaveChangesAsync();
+
+            return todo == null ? NotFound() : Ok("todo item deleted");
+
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateTodo(Item todo)
