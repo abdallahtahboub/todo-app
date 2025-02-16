@@ -11,11 +11,5 @@ public class TodoRepository
         _context = context;
     }
 
-    public async Task<Item> CreateTodoAsync(Item todo)
-    {
-        _context.TodoItems.Add(todo);
-        await _context.SaveChangesAsync();
-        return todo;
-    }
 }
 

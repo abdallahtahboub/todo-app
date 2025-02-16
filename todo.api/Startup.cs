@@ -30,16 +30,7 @@ namespace todo.api
 
             services.AddDbContext<TodoDBContext>(options =>
             options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
-
-
-            // // configuring and registering connectionString to sqlserver
-            // services.AddDbContextPool<ToDoContext>(options => options.UseSqlServer(_Configuration.GetConnectionString("TodoConnection")));
-            // // Configuring and registering the SQL repository (saving and reteeieving from database).
-            // // using addscoped method in order for the instance sql repository class to be alive and available of the entire scope of an http request.  
-            // services.AddScoped<IToDoRepository, SQLToDoRepository>();
-            // //  Configuring and registering the SQL repository (saving and reteeieving from InMemory collection)  
-            // // services.AddTransient<IToDoRepository, TodoRepositoryInMemory>();
-
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
