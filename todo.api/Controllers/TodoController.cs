@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using todo.business.Services;
+using Microsoft.EntityFrameworkCore;
 using todo.data;
 
-namespace chess_api.Controllers
+namespace Todo.api.Controller
 {
     [ApiController]
     [Route("[controller]")]
@@ -18,6 +18,13 @@ namespace chess_api.Controllers
         {
             _context = context;
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateTodo(Item todo)
+        {
+            _context.TodoItems.Add(todo);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetTodoById), new { id = todo.ItemId }, todo);
+        }
 
 
         [HttpGet("{id}")]
@@ -30,6 +37,20 @@ namespace chess_api.Controllers
             }
             return todo == null ? NotFound() : Ok(todo);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTodos()
+        {
+            var todos = await _context.TodoItems.ToListAsync();
+
+            if (!todos.Any())
+            {
+                return NotFound(new { message = "No todos found" });
+            }
+
+            return Ok(todos);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
@@ -46,13 +67,23 @@ namespace chess_api.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateTodo(Item todo)
+        [HttpDelete("all")]
+        public async Task<IActionResult> DeleteAllItems()
         {
-            _context.TodoItems.Add(todo);
+            var allTodos = await _context.TodoItems.ToListAsync();
+
+            if (!allTodos.Any())
+            {
+                return NotFound(new { message = "No todos found to delete" });
+            }
+
+            _context.TodoItems.RemoveRange(allTodos);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTodoById), new { id = todo.ItemId }, todo);
+
+            return Ok(new { message = "All todo items deleted successfully" });
         }
+
+
 
 
 
