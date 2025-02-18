@@ -1,14 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using todo.data;
-using Microsoft.EntityFrameworkCore;
-
-using todo.business.Services;
-
 
 namespace todo.api
 {
@@ -30,7 +19,7 @@ namespace todo.api
 
             services.AddDbContext<TodoDBContext>(options =>
             options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
-            
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

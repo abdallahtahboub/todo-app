@@ -29,7 +29,6 @@ public class TodoControllerTests
     {
         // Act
         var result = await _controller.GetTodoById(99);
-
         // Assert
         Assert.IsType<NotFoundObjectResult>(result);
     }
@@ -39,7 +38,7 @@ public class TodoControllerTests
     {
         // Arrange
         var testTodo = new Item { ItemId = 1, Value = "Test Todo" };
-        _controller.CreateTodo(testTodo).Wait();
+        await _controller.CreateTodo(testTodo);
 
         // Act
         var result = await _controller.GetTodoById(1);
@@ -49,8 +48,6 @@ public class TodoControllerTests
         var returnedItem = Assert.IsType<Item>(okResult.Value);
         Assert.Equal("Test Todo", returnedItem.Value);
     }
-
-
 
 
 }
