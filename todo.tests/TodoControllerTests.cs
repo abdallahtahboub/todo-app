@@ -1,12 +1,5 @@
 namespace todo.tests;
 
-using Todo.api.Controller;
-using todo.data;
-using Xunit;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 public class TodoControllerTests
 {
     //private readonly Mock<TodoDBContext> _mockContext;

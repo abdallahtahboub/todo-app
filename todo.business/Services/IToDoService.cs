@@ -1,6 +1,4 @@
 namespace todo.business.Services;
-using todo.data;
-
 public interface IToDoService
 {
 
@@ -10,7 +8,7 @@ public interface IToDoService
     public Item MarkAsCompleted(int id);
     public bool DeleteItem(int id);
     public int GenerateUUIDs();
-    
+
 
 
 }
