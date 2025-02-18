@@ -9,8 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 public class TodoControllerTests
 {
-
-
     //private readonly Mock<TodoDBContext> _mockContext;
     private readonly TodoController _controller;
 
@@ -26,12 +24,11 @@ public class TodoControllerTests
 
     }
 
-
     [Fact]
     public async Task GetTodoById_NotFound()
     {
         // Act
-        var result = await _controller.GetTodoById(99); // Assume ID 99 doesn't exist
+        var result = await _controller.GetTodoById(99);
 
         // Assert
         Assert.IsType<NotFoundObjectResult>(result);
@@ -42,7 +39,7 @@ public class TodoControllerTests
     {
         // Arrange
         var testTodo = new Item { ItemId = 1, Value = "Test Todo" };
-        _controller.CreateTodo(testTodo).Wait(); // Add item
+        _controller.CreateTodo(testTodo).Wait();
 
         // Act
         var result = await _controller.GetTodoById(1);

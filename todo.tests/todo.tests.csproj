@@ -2,14 +2,10 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-
-
   <ItemGroup>
     <ProjectReference Include="..\todo.api\todo.api.csproj" />
     <ProjectReference Include="..\todo.data\todo.data.csproj" />
   </ItemGroup>
-
-
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
