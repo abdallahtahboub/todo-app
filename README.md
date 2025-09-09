@@ -75,7 +75,7 @@ dotnet test
 ---
 ### 📡 API Endpoints
 ---
-## ✅ Roadmap
+### ✅ Roadmap
 
 - User authentication & roles
 
@@ -86,7 +86,7 @@ dotnet test
 - CI/CD pipeline setup
 ---
 
-🧪 Tests & CI/CD
+### 🧪 Tests & CI/CD
 
 - Unit tests for business logic
 
@@ -94,7 +94,7 @@ dotnet test
 
 ---
 
-👤 Author
+### 👤 Author
 
 Abdallah
 
