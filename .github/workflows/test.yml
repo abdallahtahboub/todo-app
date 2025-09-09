@@ -1,0 +1,10 @@
+name: First test Workflow
+on: workflow_dispatch
+jobs: 
+  first-job:
+    runs-on: ununtu-latest
+    steps:
+     - name: test1
+       run: echo "hello, Abdallah"
+     - name: test2
+       run: echo "Byw, Abdallah"
