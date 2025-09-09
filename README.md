@@ -91,6 +91,7 @@ dotnet test
 - Unit tests for business logic
 
 - Integration tests for API endpoints
+- Future: GitHub Actions pipeline for CI/CD
 
 ---
 
@@ -103,5 +104,5 @@ LinkedIn: [Your Profile]
 Portfolio: [Your Website]
 
 GitHub: [Your GitHub]
-- Future: GitHub Actions pipeline for CI/CD
+
 
