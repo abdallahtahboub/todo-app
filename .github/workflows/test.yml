@@ -7,6 +7,6 @@ jobs:
      - name: test1
        run: echo "hello, Abdallah"
      - name: test2
-       run:
+       run:  |
           echo "First output"
           echo "Second output"
