@@ -92,6 +92,7 @@ dotnet test
 
 - Integration tests for API endpoints
 
+---
 
 👤 Author
 
