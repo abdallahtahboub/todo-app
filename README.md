@@ -92,5 +92,15 @@ dotnet test
 
 - Integration tests for API endpoints
 
+
+👤 Author
+
+Abdallah
+
+LinkedIn: [Your Profile]
+
+Portfolio: [Your Website]
+
+GitHub: [Your GitHub]
 - Future: GitHub Actions pipeline for CI/CD
 
