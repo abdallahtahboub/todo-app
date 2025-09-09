@@ -86,5 +86,11 @@ dotnet test
 - CI/CD pipeline setup
 ---
 
+🧪 Tests & CI/CD
 
+- Unit tests for business logic
+
+- Integration tests for API endpoints
+
+- Future: GitHub Actions pipeline for CI/CD
 
