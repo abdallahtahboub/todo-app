@@ -51,8 +51,8 @@ project-root
 ## ⚡ Getting Started  
 
 ### Prerequisites  
-- .NET 7 SDK  
-- SQL Server or MySQL (local or containerized via Docker)  
+- .NET 9 SDK  
+- Postgressql (local or containerized via Docker)  
 
 ### Installation  
 ```bash
@@ -72,8 +72,17 @@ Swagger will be available at:
 dotnet test
 
 ```
----
-## 📡 API Endpoints
+### 📡 API Endpoints
+
+🔹 Get All Todos
+Request URL
+
+http://localhost:5002/Todo
+
+Example Server Response
+
+<pre> [{"itemId":11,"value":"test me","isCompleted":true},{"itemId":12,"value":"hello","isCompleted":true},{"itemId":13,"value":"string","isCompleted":true},{"itemId":14,"value":"string","isCompleted":true},{"itemId":15,"value":"string","isCompleted":true},{"itemId":16,"value":"string","isCompleted":true},{"itemId":17,"value":"string","isCompleted":true},{"itemId":18,"value":"string","isCompleted":true},{"itemId":19,"value":"string","isCompleted":true},{"itemId":20,"value":"string","isCompleted":true},{"itemId":21,"value":"string","isCompleted":true},{"itemId":22,"value":"string","isCompleted":true},{"itemId":23,"value":"string","isCompleted":true}] </pre>
+
 ---
 ## ✅ Roadmap
 
@@ -104,5 +113,4 @@ LinkedIn: [Your Profile]
 Portfolio: [Your Website]
 
 GitHub: [Your GitHub]
-
 
