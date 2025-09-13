@@ -1,4 +1,6 @@
 
+using System;
+
 namespace todo.api
 {
     public class Startup
@@ -16,6 +18,17 @@ namespace todo.api
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddSingleton<IToDoService, ToDoService>();
+
+            // Get connection string with fallback hierarchy
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException(
+                    "Database connection string not found. " +
+                    "Please set it using user secrets (development) or environment variables (production)."
+                );
+            }
 
             services.AddDbContext<TodoDBContext>(options =>
             options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
