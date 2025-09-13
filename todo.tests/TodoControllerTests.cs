@@ -1,9 +1,11 @@
+using Microsoft.Extensions.Configuration;
+
 namespace todo.tests;
 
 public class TodoControllerTests
 {
     //private readonly Mock<TodoDBContext> _mockContext;
-    private readonly TodoController _controller;
+    private readonly TodoController _todoController;
 
     public TodoControllerTests()
     {
@@ -13,7 +15,7 @@ public class TodoControllerTests
             .Options;
         var context = new TodoDBContext(options);
 
-        _controller = new TodoController(context);
+        _todoController = new TodoController(context);
 
     }
 
@@ -21,7 +23,7 @@ public class TodoControllerTests
     public async Task GetTodoById_NotFound()
     {
         // Act
-        var result = await _controller.GetTodoById(99);
+        var result = await _todoController.GetTodoById(99);
         // Assert
         Assert.IsType<NotFoundObjectResult>(result);
     }
@@ -31,16 +33,15 @@ public class TodoControllerTests
     {
         // Arrange
         var testTodo = new Item { ItemId = 1, Value = "Test Todo" };
-        await _controller.CreateTodo(testTodo);
+        await _todoController.CreateTodo(testTodo);
 
         // Act
-        var result = await _controller.GetTodoById(1);
+        var result = await _todoController.GetTodoById(1);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         var returnedItem = Assert.IsType<Item>(okResult.Value);
         Assert.Equal("Test Todo", returnedItem.Value);
     }
-
 
 }
