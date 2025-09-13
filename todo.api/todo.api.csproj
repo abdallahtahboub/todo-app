@@ -2,8 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <UserSecretsId>5108f6d7-9a0e-4a27-baad-4bb7506cbeb7</UserSecretsId>
-  </PropertyGroup>
-  
+  </PropertyGroup>   
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
