@@ -30,8 +30,9 @@ This project demonstrates best practices in **API design, business logic separat
 - **API:** ASP.NET Core Web API
 - ORM: Entity Framework Core  
 - **Data:** PostgreSQL
-- **Testing:** xUnit / NUnit (with mocking)
+- **Testing:** xUnit with In-Memory Database
 - **Documentation:** Swagger/OpenAP
+- **Package Managemen:** NuGet
 - **Other:** Dependency Injection  
 
 ---
