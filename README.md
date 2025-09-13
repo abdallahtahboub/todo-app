@@ -25,11 +25,14 @@ This project demonstrates best practices in **API design, business logic separat
 ---
 
 ## 🛠️ Tech Stack  
-- **Backend:** .NET 7, C#  
-- **API:** ASP.NET Core Web API  
-- **Data:** Entity Framework Core, SQL Server/MySQL  
-- **Testing:** xUnit / NUnit (with mocking)  
-- **Other:** Swagger for API docs, Dependency Injection  
+- **Backend:** .NET 7, C#
+- **Frontend**: BLazor Server
+- **API:** ASP.NET Core Web API
+- ORM: Entity Framework Core  
+- **Data:** PostgreSQL
+- **Testing:** xUnit / NUnit (with mocking)
+- **Documentation:** Swagger/OpenAP
+- **Other:** Dependency Injection  
 
 ---
 
