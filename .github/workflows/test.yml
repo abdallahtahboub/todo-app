@@ -1,34 +1,24 @@
-name: First Test Workflow
 
-on:
-  push:          # Trigger on any branch push
-  schedule:
-    - cron: '30 17 * * *'  # Every day at 10:30 AM Berlin time (08:30 UTC)
-  workflow_dispatch:       # Optional: manual trigger
-
-jobs:
+name: First test Workflow
+on: push
+jobs: 
   test-job:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
     - name: Download .NET 9.0 SDK
       run: |
-        curl -L -o dotnet-sdk-9.0.305-linux-x64.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.305/dotnet-sdk-9.0.305-linux-x64.tar.gz
+       curl -L -o dotnet-sdk-9.0.0.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.305/dotnet-sdk-9.0.305-linux-x64.tar.gz
         mkdir -p $HOME/dotnet
-        tar -zxf dotnet-sdk-9.0.305-linux-x64.tar.gz -C $HOME/dotnet
+        tar -zxf dotnet-sdk-9.0.0.tar.gz -C $HOME/dotnet
         echo "$HOME/dotnet" >> $GITHUB_PATH
-
     - name: Verify dotnet
       run: $HOME/dotnet/dotnet --version
-
     - name: Restore dependencies
-      run: $HOME/dotnet/dotnet restore
+      run: dotnet restore
 
     - name: Build
-      run: $HOME/dotnet/dotnet build --no-restore --configuration Release
-
+      run: dotnet build --no-restore
     - name: Run Tests
-      run: $HOME/dotnet/dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
