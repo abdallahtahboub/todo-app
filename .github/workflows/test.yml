@@ -1,9 +1,9 @@
 
 name: First test Workflow
 on:
-  push:          # Trigger on any branch push
-  schedule:
-    - cron: '38 17 * * *'  # Every day at 10:30 AM Berlin time (08:30 UTC)
+  push:
+  schedule: 
+    - cron: '* * * * *'  
 jobs: 
   test-job:
     runs-on: ubuntu-latest
