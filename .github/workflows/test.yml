@@ -12,6 +12,8 @@ jobs:
         mkdir -p $HOME/dotnet
         tar -zxf dotnet-sdk-9.0.0.tar.gz -C $HOME/dotnet
         echo "$HOME/dotnet" >> $GITHUB_PATH
+    - name: Verify dotnet
+      run: $HOME/dotnet/dotnet --version
     - name: Restore dependencies
       run: dotnet restore
 
