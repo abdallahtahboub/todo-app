@@ -4,7 +4,7 @@ namespace todo.business.Services;
 public class ToDoService : IToDoService
 {
     public List<Item> _Items = new();
-    public Item _item;  
+    public Item _item;
     public Item AddItem(string Value)
     {
         _item = new Item
@@ -29,6 +29,12 @@ public class ToDoService : IToDoService
 
         return null;
     }
+
+    public IEnumerable<Item> GetAll()
+    {
+        return _Items;
+    }
+
 
 
     public Item UpdateItem(int id, string newValue)
