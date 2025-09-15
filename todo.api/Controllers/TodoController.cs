@@ -55,12 +55,14 @@ namespace Todo.api.Controllers
         public async Task<IActionResult> DeleteItem(int id)
         {
             var todo = await _context.TodoItems.FindAsync(id);
+
             if (todo == null)
-                return NotFound(new { message = "Todo item not found" });
+                return NotFound(); // No message needed
 
             _context.TodoItems.Remove(todo);
-            await _context.SaveChangesAsync();            
-            return NoContent();
+            await _context.SaveChangesAsync();
+
+            return NoContent(); // 204
         }
 
         [HttpDelete("all")]
@@ -68,11 +70,11 @@ namespace Todo.api.Controllers
         {
             var allTodos = await _context.TodoItems.ToListAsync();
             if (!allTodos.Any())
-                return NotFound(new { message = "No todos found to delete" });
+                return NotFound(); // No message needed
 
             _context.TodoItems.RemoveRange(allTodos);
             await _context.SaveChangesAsync();
-            return Ok(new { message = "All todo items deleted successfully" });
+            return Ok();
         }
 
     }
