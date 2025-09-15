@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Configuration;
-
 namespace todo.tests;
 
 public class TodoControllerTests
@@ -32,7 +30,7 @@ public class TodoControllerTests
     public async Task GetTodoById_ReturnsItem()
     {
         // Arrange
-        var testTodo = new Item { ItemId = 1, Value = "Test Todo" };
+        var testTodo = new CreateTodoDto {Value = "Test Todo" };
         await _todoController.CreateTodo(testTodo);
 
         // Act
