@@ -1,12 +1,27 @@
+
 name: First test Workflow
-on: workflow_dispatch
+on:
+  push:
+  schedule: 
+    - cron: '*/5 * * * *' 
 jobs: 
-  first-job:
+  test-job:
     runs-on: ubuntu-latest
     steps:
-     - name: test1
-       run: echo "hello, Abdallah"
-     - name: test2
-       run:  |
-          echo "First output"
-          echo "Second output"
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Download .NET 9.0 SDK
+      run: |
+       curl -L -o dotnet-sdk-9.0.0.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.305/dotnet-sdk-9.0.305-linux-x64.tar.gz
+        mkdir -p $HOME/dotnet
+        tar -zxf dotnet-sdk-9.0.0.tar.gz -C $HOME/dotnet
+        echo "$HOME/dotnet" >> $GITHUB_PATH
+    - name: Verify dotnet
+      run: $HOME/dotnet/dotnet --version
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Run Tests
+      run: dotnet test --no-build --verbosity normal
