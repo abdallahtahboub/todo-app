@@ -81,7 +81,11 @@ $RECYCLE.BIN/
 # ----------------------------
 # User / Local Configurations
 # ----------------------------
-appsettings.Development.json
+# Ignore sensitive configuration files
+appsettings.Production.json
+appsettings.*.local.json
++ appsettings.Production.json
++ appsettings.*.local.json
 *.pfx
 *.publishsettings
 HealthChecksDb
@@ -95,7 +99,12 @@ HealthChecksDb
 *.ldf
 *.ndf
 
-# ----------------------------
+# Ignore temporary or unnecessary files in _framework, but keep essential files
+wwwroot/_framework/*.cache
+wwwroot/_framework/*.map
+wwwroot/_framework/*.pdb
+wwwroot/_framework/*.gz
+wwwroot/_framework/*.br
 # Node / Frontend
 # ----------------------------
 node_modules/
@@ -124,7 +133,9 @@ _TeamCity*
 !.axoCover/settings.json
 coverage*.json
 coverage*.xml
-OpenCover/
+tools/*.tmp
+tools/*.log
+tools/*.cache
 NCrunchTemp_*
 .fake/
 *.mm.*
