@@ -1,90 +1,100 @@
 
-namespace Todo.api.Controller
+namespace Todo.api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TodoController : ControllerBase
     {
-
-
         private readonly TodoDBContext _context;
 
         public TodoController(TodoDBContext context)
         {
             _context = context;
         }
+
         [HttpPost]
-        public async Task<IActionResult> CreateTodo(Item todo)
+        public async Task<IActionResult> CreateTodo([FromBody] CreateTodoDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var todo = new Item
+            {
+                Value = dto.Value,
+                IsCompleted = false
+            };
+
             _context.TodoItems.Add(todo);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTodoById), new { id = todo.ItemId }, todo);
-        }
 
+            var result = new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted);
+
+            return CreatedAtAction(nameof(GetTodoById), new { id = todo.ItemId }, result);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTodoById(int id)
         {
             var todo = await _context.TodoItems.FindAsync(id);
             if (todo == null)
-            {
-                return NotFound(new { message = "Todo item not found" });
-            }
-            return todo == null ? NotFound() : Ok(todo);
+                return NotFound();
+
+            var dto = new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted);
+            return Ok(dto);
         }
 
-        [HttpGet]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTodo(int id, [FromBody] UpdateTodoDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var todo = await _context.TodoItems.FindAsync(id);
+            if (todo == null)
+                return NotFound();
+
+            todo.Value = dto.Value;
+            todo.IsCompleted = dto.IsCompleted;
+
+            await _context.SaveChangesAsync();
+
+            var result = new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted);
+            return Ok(result);
+        }
+
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllTodos()
         {
             var todos = await _context.TodoItems.ToListAsync();
-
-            if (!todos.Any())
-            {
-                return NotFound(new { message = "No todos found" });
-            }
-
-            return Ok(todos);
+            var result = todos.Select(t => new TodoDto(t.ItemId, t.Value, t.IsCompleted));
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
             var todo = await _context.TodoItems.FindAsync(id);
+
             if (todo == null)
-            {
-                return NotFound(new { message = "Todo item not found" });
-            }
+                return NotFound(); // No message needed
 
             _context.TodoItems.Remove(todo);
             await _context.SaveChangesAsync();
 
-            return todo == null ? NotFound() : Ok("todo item deleted");
-
+            return NoContent(); // 204
         }
 
         [HttpDelete("all")]
         public async Task<IActionResult> DeleteAllItems()
         {
             var allTodos = await _context.TodoItems.ToListAsync();
-
             if (!allTodos.Any())
-            {
-                return NotFound(new { message = "No todos found to delete" });
-            }
+                return NotFound(); // No message needed
 
             _context.TodoItems.RemoveRange(allTodos);
             await _context.SaveChangesAsync();
-
-            return Ok(new { message = "All todo items deleted successfully" });
+            return Ok();
         }
-
-
-
-
-
-
-
 
     }
 }
-

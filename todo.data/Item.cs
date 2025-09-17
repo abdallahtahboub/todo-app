@@ -8,7 +8,7 @@ namespace todo.data
     {
         public int ItemId { get; set; }
         [Required]
-        public string Value { get; set; }
+          public string Value { get; set; } = string.Empty;
         [Required]
         public bool IsCompleted { get; set; }
 

@@ -19,9 +19,10 @@ namespace todo.api
         {
             //services.AddSingleton<IToDoService, ToDoService>();
 
-            // Get connection string with fallback hierarchy
+            // Get connection string from configuration
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
-
+            services.AddDbContext<TodoDBContext>(options =>
+            options.UseNpgsql(connectionString));
             if (string.IsNullOrEmpty(connectionString))
             {
                 throw new InvalidOperationException(
@@ -29,9 +30,6 @@ namespace todo.api
                     "Please set it using user secrets (development) or environment variables (production)."
                 );
             }
-
-            services.AddDbContext<TodoDBContext>(options =>
-            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -49,6 +47,7 @@ namespace todo.api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "todo.api v1"));
             }
+            app.UseMiddleware<todo.api.Middleware.ErrorHandlingMiddleware>();
 
             app.UseRouting();
 
