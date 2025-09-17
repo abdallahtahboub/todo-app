@@ -112,9 +112,4 @@ Example Server Response
 
 Abdallah
 
-LinkedIn: [Your Profile]
-
-Portfolio: [Your Website]
-
-GitHub: [Your GitHub]
-
+LinkedIn: [www.linkedin.com/in/abdallah-tahboub-024954a7]
