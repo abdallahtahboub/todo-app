@@ -43,6 +43,25 @@ namespace Todo.api.Controllers
             return Ok(dto);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTodo(int id, [FromBody] UpdateTodoDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var todo = await _context.TodoItems.FindAsync(id);
+            if (todo == null)
+                return NotFound();
+
+            todo.Value = dto.Value;
+            todo.IsCompleted = dto.IsCompleted;
+
+            await _context.SaveChangesAsync();
+
+            var result = new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted);
+            return Ok(result);
+        }
+
         [HttpGet("all")]
         public async Task<IActionResult> GetAllTodos()
         {
