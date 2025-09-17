@@ -6,4 +6,4 @@ global using Xunit;
 global using System.Threading.Tasks;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
-global using todo.api.Models;
+global using todo.api.Dtos;
