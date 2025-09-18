@@ -84,10 +84,6 @@ $RECYCLE.BIN/
 # Ignore sensitive configuration files
 appsettings.Production.json
 appsettings.*.local.json
-+ appsettings.Production.json
-+ appsettings.*.local.json
-*.pfx
-*.publishsettings
 HealthChecksDb
 .localhistory/
 *.userprefs
@@ -157,4 +153,3 @@ UpgradeLog*.htm
 *.tar.gz
 *.dmg
 *.nvuser
-
