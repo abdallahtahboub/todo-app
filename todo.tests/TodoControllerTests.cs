@@ -23,14 +23,14 @@ public class TodoControllerTests
         // Act
         var result = await _todoController.GetTodoById(99);
         // Assert
-        Assert.IsType<NotFoundObjectResult>(result);
+        Assert.IsType<NotFoundResult>(result);
     }
 
     [Fact]
     public async Task GetTodoById_ReturnsItem()
     {
         // Arrange
-        var testTodo = new CreateTodoDto {Value = "Test Todo" };
+        var testTodo = new CreateTodoDto { Value = "Test Todo" };
         await _todoController.CreateTodo(testTodo);
 
         // Act
@@ -38,7 +38,7 @@ public class TodoControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnedItem = Assert.IsType<Item>(okResult.Value);
+        var returnedItem = Assert.IsType<TodoDto>(okResult.Value);
         Assert.Equal("Test Todo", returnedItem.Value);
     }
 
