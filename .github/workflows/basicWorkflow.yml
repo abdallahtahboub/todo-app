@@ -1,5 +1,5 @@
 
-name: First test Workflow
+name: Basic todo workflow
 on:
   push:
   schedule: 
