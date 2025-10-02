@@ -6,7 +6,6 @@ namespace Todo.api.Controllers
     public class TodoController : ControllerBase
     {
         private readonly TodoDBContext _context;
-
         public TodoController(TodoDBContext context)
         {
             _context = context;
@@ -32,9 +31,17 @@ namespace Todo.api.Controllers
             return CreatedAtAction(nameof(GetTodoById), new { id = todo.ItemId }, result);
         }
 
+        /// <summary>
+        /// Gets a todo item by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the todo item.</param>
+        /// <response code="200">Returns the todo item.</response>
+        /// <response code="404">If the todo item is not found.</response>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTodoById(int id)
+        public async Task<ActionResult> GetTodoById(int id)
         {
+            if (id <= 0)
+                return BadRequest("Invalid ID.");
             var todo = await _context.TodoItems.FindAsync(id);
             if (todo == null)
                 return NotFound();
@@ -44,7 +51,7 @@ namespace Todo.api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTodo(int id, [FromBody] UpdateTodoDto dto)
+        public async Task<ActionResult<TodoDto>> UpdateTodo(int id, [FromBody] UpdateTodoDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
