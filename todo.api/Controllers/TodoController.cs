@@ -1,4 +1,5 @@
 
+
 namespace Todo.api.Controllers
 {
     [ApiController]
@@ -36,19 +37,24 @@ namespace Todo.api.Controllers
         /// </summary>
         /// <param name="id">The ID of the todo item.</param>
         /// <response code="200">Returns the todo item.</response>
+        /// <response code="200">Returns the todo item.</response>
         /// <response code="404">If the todo item is not found.</response>
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetTodoById(int id)
+        public async Task<ActionResult<TodoDto>> GetTodoById(int id)
         {
             if (id <= 0)
                 return BadRequest("Invalid ID.");
-            var todo = await _context.TodoItems.FindAsync(id);
+
+            var todo = await _context.TodoItems
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(t => t.ItemId == id);
+
             if (todo == null)
                 return NotFound();
 
-            var dto = new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted);
-            return Ok(dto);
+            return new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted);
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult<TodoDto>> UpdateTodo(int id, [FromBody] UpdateTodoDto dto)
@@ -70,7 +76,7 @@ namespace Todo.api.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAllTodos()
+        public async Task<ActionResult<IEnumerable<TodoDto>>> GetAllTodos()
         {
             var todos = await _context.TodoItems.ToListAsync();
             var result = todos.Select(t => new TodoDto(t.ItemId, t.Value, t.IsCompleted));
