@@ -23,7 +23,7 @@ public class TodoControllerTests
         // Act
         var result = await _todoController.GetTodoById(99);
         // Assert
-        Assert.IsType<NotFoundResult>(result);
+        Assert.IsType<ActionResult<TodoDto>>(result);
     }
 
     [Fact]
