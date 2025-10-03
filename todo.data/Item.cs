@@ -10,7 +10,7 @@ namespace todo.data
         [Required]
           public string Value { get; set; } = string.Empty;
         [Required]
-        public bool IsCompleted { get; set; }
+        public bool IsCompleted { get; set; } = false;
 
     }
 }

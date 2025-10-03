@@ -22,8 +22,9 @@ public class TodoControllerTests
     {
         // Act
         var result = await _todoController.GetTodoById(99);
+
         // Assert
-        Assert.IsType<NotFoundResult>(result);
+        Assert.IsType<NotFoundResult>(result.Result);
     }
 
     [Fact]
@@ -37,9 +38,13 @@ public class TodoControllerTests
         var result = await _todoController.GetTodoById(1);
 
         // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result);
+        // result.Result is IActionResult, we expect OkObjectResult
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+
+        // Extract the actual TodoDto
         var returnedItem = Assert.IsType<TodoDto>(okResult.Value);
         Assert.Equal("Test Todo", returnedItem.Value);
     }
+
 
 }
