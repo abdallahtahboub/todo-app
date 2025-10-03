@@ -68,7 +68,7 @@ namespace Todo.api.Controllers
             if (todo == null)
                 return NotFound();
 
-            return new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted);
+            return Ok(new TodoDto(todo.ItemId, todo.Value, todo.IsCompleted));
         }
 
         /// <summary>
