@@ -1,5 +1,7 @@
 
 using System;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace todo.api
 {
@@ -8,9 +10,12 @@ namespace todo.api
 
         private readonly IConfiguration _configuration;
 
+
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
+
+
         }
 
 
@@ -32,20 +37,56 @@ namespace todo.api
             }
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+
+            // Add API Versioning
+            services.AddApiVersioning(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "todo.api", Version = "v1" });
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true; // adds headers "api-supported-versions"
+            });
+
+            // Add API Explorer (needed for Swagger to show versions)
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV"; // e.g. v1, v2, v3
+                options.SubstituteApiVersionInUrl = true;
+            });
+            // Add Swagger
+            services.AddSwaggerGen(options =>
+            {
+                // Add XML comments (from your XML docs)
+                var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+
+
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "todo.api v1"));
+
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    // Generate a Swagger endpoint per API version
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                                                 $"Todo API {description.GroupName.ToUpperInvariant()}");
+                    }
+
+                    // Optional: serve Swagger UI at the root
+                    options.RoutePrefix = string.Empty;
+                });
+
             }
             app.UseMiddleware<todo.api.Middleware.ErrorHandlingMiddleware>();
 

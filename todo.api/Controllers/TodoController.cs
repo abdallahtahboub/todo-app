@@ -62,7 +62,7 @@ namespace Todo.api.Controllers
                 return BadRequest("Invalid ID.");
 
             var todo = await _context.TodoItems
-                                       .AsNoTracking()
+                                       .AsNoTracking() // Avoid tracking the entity since we're just reading
                                        .FirstOrDefaultAsync(t => t.ItemId == id);
 
             if (todo == null)
