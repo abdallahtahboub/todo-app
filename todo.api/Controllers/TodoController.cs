@@ -4,7 +4,8 @@ namespace Todo.api.Controllers
     /// Provides CRUD operations for managing Todo items.
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]  // v1
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class TodoController : ControllerBase
     {
         private readonly TodoDBContext _context;
@@ -27,6 +28,7 @@ namespace Todo.api.Controllers
         /// </returns>
         /// <response code="201">Returns the newly created Todo item.</response>
         /// <response code="400">If the request data is invalid.</response>
+
         [HttpPost]
         public async Task<IActionResult> CreateTodo([FromBody] CreateTodoDto dto)
         {
@@ -62,7 +64,7 @@ namespace Todo.api.Controllers
                 return BadRequest("Invalid ID.");
 
             var todo = await _context.TodoItems
-                                       .AsNoTracking()
+                                       .AsNoTracking() // Avoid tracking the entity since we're just reading
                                        .FirstOrDefaultAsync(t => t.ItemId == id);
 
             if (todo == null)
