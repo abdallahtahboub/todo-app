@@ -1,4 +1,4 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - todo-api-abdallah
+name: Build and deploy todo-api to Azure
 
 on:
   push:
@@ -51,3 +51,4 @@ jobs:
           slot-name: 'Production'
           package: ./publish              # 👈 deploy the publish folder
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F8939167AC3149D5B6B48242734CBD09 }}
+
