@@ -1,115 +1,70 @@
-# ✅ ToDo App  
+# Todo API
 
-A clean, modular **To-Do list application** built with **.NET** following a layered architecture.  
-This project demonstrates best practices in **API design, business logic separation, data persistence, and testing**.  
+A C# portfolio project with a versioned ASP.NET Core REST API, PostgreSQL persistence through Entity Framework Core, and xUnit controller tests. The repository also contains a Blazor Server prototype that stores items in memory.
 
----
+## Run the API locally
 
-## 🚀 Features  
-- Create, update, delete tasks  
-- Mark tasks as completed  
-- Categorize and prioritize todos  
-- RESTful API with Swagger documentation  
-- Unit & integration tests  
+**Prerequisites:** .NET SDK 9.0.305 (see [global.json](global.json)) and a running PostgreSQL instance. Create a development database named `todo` and give a local PostgreSQL role permission to create tables in it.
 
----
-
-## 🎯 Problem & Solution  
-**Problem:** Managing tasks effectively often requires more than just a checklist—apps should be structured, scalable, and maintainable.  
-
-**Solution:** This project demonstrates how to design a **modular .NET To-Do application** with clean architecture principles:  
-- Separation of concerns (API, business, data, tests).  
-- Scalable structure for future features.  
-- Production-ready patterns (dependency injection, layered design).  
-
----
-
-## 🛠️ Tech Stack  
-- **Backend:** .NET 7, C#
-- **Frontend**: BLazor Server
-- **API:** ASP.NET Core Web API
-- ORM: Entity Framework Core  
-- **Data:** PostgreSQL
-- **Testing:** xUnit with In-Memory Database
-- **Documentation:** Swagger/OpenAP
-- **Package Managemen:** NuGet
-- **Other:** Dependency Injection  
-
----
-
-## 📂 Solution Structure 
-```plaintext
-project-root
- ├── todo.api        # REST API layer (controllers, Swagger setup)
- ├── todo.app        # Application services (use cases, DTOs, validation)
- ├── todo.business   # Business logic (domain rules, entities)
- ├── todo.core       # Core models, shared utilities
- ├── todo.data       # Data access (repositories, EF Core DbContext)
- ├── todo.tests      # Unit & integration tests
- └── README.md
-
-```
-
----
-
-## ⚡ Getting Started  
-
-### Prerequisites  
-- .NET 9 SDK  
-- Postgressql (local or containerized via Docker)  
-
-### Installation  
 ```bash
-# clone the repo
-git clone https://github.com/username/todo-app.git
-
-# navigate to project folder
+git clone https://github.com/abdallahtahboub/todo-app.git
 cd todo-app
 
-# restore dependencies
-dotnet restore
-
-Swagger will be available at:
-👉 https://localhost:5002/swagger
-
-# Running Tests
-dotnet test
-
+dotnet tool install --tool-path ./.git/ef-tools dotnet-ef --version 9.0.8
 ```
-### 📡 API Endpoints
 
-🔹 Get All Todos
-Request URL
+Set the connection string for your local database. Replace the example username and password with your development credentials.
 
-http://localhost:5002/Todo
+```bash
+export ConnectionStrings__DefaultConnection='Host=localhost;Port=5432;Database=todo;Username=todo_user;Password=replace-me'
 
-Example Server Response
+./.git/ef-tools/dotnet-ef database update \
+  --project todo.data/todo.data.csproj \
+  --startup-project todo.api/todo.api.csproj
 
-<pre> [{"itemId":11,"value":"test me","isCompleted":true},{"itemId":12,"value":"hello","isCompleted":true},{"itemId":13,"value":"string","isCompleted":true},{"itemId":14,"value":"string","isCompleted":true},{"itemId":15,"value":"string","isCompleted":true},{"itemId":16,"value":"string","isCompleted":true},{"itemId":17,"value":"string","isCompleted":true},{"itemId":18,"value":"string","isCompleted":true},{"itemId":19,"value":"string","isCompleted":true},{"itemId":20,"value":"string","isCompleted":true},{"itemId":21,"value":"string","isCompleted":true},{"itemId":22,"value":"string","isCompleted":true},{"itemId":23,"value":"string","isCompleted":true}] </pre>
+dotnet run --project todo.api/todo.api.csproj --launch-profile todo.api
+```
 
----
-## ✅ Roadmap
+Open [Swagger UI](http://localhost:5002/swagger) to try the API. For a quick check against the running service:
 
-- User authentication & roles
+```bash
+curl --fail http://localhost:5002/api/v1/Todo/all
+```
 
-- Task due dates & reminders
+A fresh database returns `[]`.
 
-- Frontend Blazor integration
+## API routes
 
-- CI/CD pipeline setup
----
+All routes start with `/api/v1/Todo`. Item IDs are integers.
 
-## 🧪 Tests & CI/CD
+| Method | Route suffix | Behavior |
+| --- | --- | --- |
+| POST | — | Create an item from `{"value":"Buy groceries"}`. New items start incomplete. |
+| GET | `/{id}` | Fetch an item by ID. Returns 404 for a missing item. |
+| GET | `/all` | List items. |
+| PUT | `/{id}` | Update the text and completion state, for example `{"value":"Buy groceries","isCompleted":true}`. |
+| DELETE | `/{id}` | Delete one item. |
+| DELETE | `/all` | Delete all items in the development database. |
 
-- Unit tests for business logic
+## Tests
 
-- Integration tests for API endpoints
-- Future: GitHub Actions pipeline for CI/CD
+```bash
+dotnet test todo.sln
+```
 
----
+The xUnit tests call the controller directly using EF Core’s in-memory provider. They cover successful lookup and the missing-item response and can run independently of PostgreSQL. The [GitHub Actions build-and-test workflow](.github/workflows/basicWorkflow.yml) runs on push and on a schedule.
 
-## 👤 Author
+## Where to start reading
 
-Abdallah
+| Path | What to look at |
+| --- | --- |
+| [todo.api](todo.api) | Versioned controller, request and response DTOs, Swagger configuration, and error-handling middleware. |
+| [todo.data](todo.data) | EF Core context and the initial PostgreSQL migration. |
+| [todo.tests](todo.tests) | xUnit controller tests for lookup behavior. |
+| [todo.app](todo.app) | Standalone Blazor Server prototype for adding and deleting in-memory items. |
 
-LinkedIn: [www.linkedin.com/in/abdallah-tahboub-024954a7]
+To try the Blazor prototype separately, run `dotnet run --project todo.app/todo.app.csproj --launch-profile todo.app` and open [http://localhost:5000](http://localhost:5000).
+
+## Author
+
+[Abdallah Tahboub on LinkedIn](https://www.linkedin.com/in/abdallah-tahboub-024954a7/)
