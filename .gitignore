@@ -153,3 +153,7 @@ UpgradeLog*.htm
 *.tar.gz
 *.dmg
 *.nvuser
+
+# Local SQL Server private keys
+/todo.data/mssql.key
+/todo.data/sqlserver.key
